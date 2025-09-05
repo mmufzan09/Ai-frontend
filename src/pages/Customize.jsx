@@ -35,12 +35,12 @@ function Customize() {
   return (
     <div className="w-full min-h-screen bg-gradient-to-t from-black to-blue-950 flex flex-col items-center py-8 md:py-16 px-4">
       
-      {/* Heading */}
+      {/* 🔹 Heading */}
       <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-6 text-center drop-shadow-lg">
         Select Your Assistant Image
       </h1>
 
-      {/* Images Grid */}
+      {/* 🔹 Images Grid */}
       <div className="w-full max-w-6xl grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         
         {/* Predefined Images */}
@@ -78,6 +78,7 @@ function Customize() {
           )}
         </div>
 
+        {/* Hidden Input */}
         <input
           type="file"
           accept="image/*"
@@ -87,7 +88,7 @@ function Customize() {
         />
       </div>
 
-      {/* Next Button */}
+      {/* 🔹 Next Button */}
       <button
         disabled={!selectImage}
         onClick={() => navigate("/customize2")}

@@ -9,7 +9,9 @@ function Customize2() {
   const [assistantName, setAssistantName] = useState(userData?.assistantName || "");
   const navigate = useNavigate();
 
-  const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
+ const serverUrl =
+  import.meta.env.VITE_SERVER_URL ||
+  "https://ai-backend-production-cf44.up.railway.app";
 
   const handleUpdateAssistant = async () => {
     try {
