@@ -4,7 +4,7 @@ import axios from "axios";
 export const UserDataContext = createContext();
 
 function UserContext({ children }) {
-  const serverUrl = "https://echomind-backend.vercel.app";
+  const serverUrl = "https://ai-backend-production-cf44.up.railway.app";
   const [userData, setUserData] = useState(null);
   const [frontImage, setFrontImage] = useState(null);
   const [backendImage, setBackImage] = useState(null);
