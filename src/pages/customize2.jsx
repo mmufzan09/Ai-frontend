@@ -40,15 +40,16 @@ function Customize2() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-t from-black to-blue-950 flex flex-col justify-start items-center py-8 md:py-16 gap-6 relative">
+    <div className="w-full min-h-screen bg-gradient-to-t from-black to-blue-950 flex flex-col items-center py-10 px-4 relative">
       
       {/* 🔙 Back button */}
       <IoArrowBackSharp
-        className="absolute top-6 left-4 md:top-8 md:left-8 text-white w-6 h-6 md:w-7 md:h-7 cursor-pointer"
+        className="absolute top-6 left-4 sm:top-8 sm:left-8 text-white w-6 h-6 sm:w-7 sm:h-7 cursor-pointer hover:scale-110 transition"
         onClick={() => navigate("/customize")}
       />
 
-      <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center">
+      {/* Heading */}
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center mb-6 drop-shadow-lg">
         Enter Your Assistant Name
       </h1>
 
@@ -57,29 +58,31 @@ function Customize2() {
         <img
           src={selectImage instanceof File ? URL.createObjectURL(selectImage) : selectImage}
           alt="assistant"
-          className="w-[150px] h-[150px] rounded-full object-cover border-2 border-white shadow-lg"
+          className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-full object-cover border-4 border-cyan-400 shadow-lg shadow-cyan-600/40 mb-6"
         />
       )}
 
+      {/* Input Box */}
       <input
         type="text"
         value={assistantName}
         onChange={(e) => setAssistantName(e.target.value)}
         placeholder="Type assistant name..."
-        className="w-[85%] max-w-[350px] h-12 md:h-14 px-4 rounded-lg 
+        className="w-[90%] max-w-md h-12 sm:h-14 px-4 rounded-lg 
           text-white bg-gradient-to-r from-blue-900 to-blue-950 
-          border border-blue-800 shadow-md shadow-blue-900/30 
-          focus:outline-none focus:ring-2 focus:ring-cyan-900 text-base md:text-lg"
+          border border-blue-700 shadow-md shadow-blue-900/40 
+          focus:outline-none focus:ring-2 focus:ring-cyan-500 text-base sm:text-lg mb-6"
       />
 
+      {/* Create Button */}
       <button
         disabled={!assistantName}
-        className={`w-[85%] max-w-[350px] h-12 md:h-14 rounded-full font-semibold text-base md:text-lg mt-4 shadow-lg transition-all duration-300 ease-in-out
+        onClick={handleUpdateAssistant}
+        className={`w-[90%] max-w-md h-12 sm:h-14 rounded-full font-semibold text-base sm:text-lg shadow-lg transition-all duration-300 ease-in-out
           ${assistantName 
             ? "bg-gradient-to-r from-cyan-700 to-blue-900 text-white hover:scale-105 hover:shadow-cyan-400/70" 
-            : "hidden"
+            : "bg-gray-500 opacity-50 cursor-not-allowed"
           }`}
-        onClick={handleUpdateAssistant}
       >
         Finally, Your Assistant is Created
       </button>

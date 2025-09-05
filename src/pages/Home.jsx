@@ -18,17 +18,9 @@ function HomePage() {
   const voicesRef = useRef([]);
   const recognitionRef = useRef(null);
   const navigate = useNavigate();
-  const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
+ const serverUrl = "https://ai-backend-production-cf44.up.railway.app";
 
-  // ✅ Arduino command bhejne ka helper
-  const sendToArduino = async (cmd) => {
-    try {
-      await axios.post(`${serverUrl}/api/arduino/send`, { command: cmd });
-      setArduinoStatus(`✅ Arduino executed: ${cmd}`);
-    } catch (err) {
-      setArduinoStatus(`❌ Arduino error: ${err.message}`);
-    }
-  };
+  
 
   // Load voices
   useEffect(() => {

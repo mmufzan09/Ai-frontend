@@ -26,7 +26,7 @@ const handleSignin = async (e) => {
     );
     console.log(result.data);
     setLoading(false);
-    navigate("/customize");
+    navigate("/");
   } catch (err) {
     console.error("Signin error:", err.response?.data || err.message);
     setLoading(false);

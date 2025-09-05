@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 
 function Customize() {
   const { selectImage, setSelectImage } = useContext(UserDataContext);
-
   const navigate = useNavigate();
   const InputImage = useRef(null);
 
@@ -23,7 +22,7 @@ function Customize() {
     if (file) {
       const url = URL.createObjectURL(file);
       setUploadedImage(url);
-      setSelectImage(file); // ✅ file ko save karna hai (sirf url nahi)
+      setSelectImage(file); // ✅ file ko context me save kar rahe
     }
   };
 
@@ -34,13 +33,15 @@ function Customize() {
   const predefinedImages = [image1, image2, image3, image4, image5, image6];
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-t from-black to-blue-950 flex flex-col justify-start items-center py-8 md:py-16 gap-6">
+    <div className="w-full min-h-screen bg-gradient-to-t from-black to-blue-950 flex flex-col items-center py-8 md:py-16 px-4">
       
-      <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-4 text-center">
+      {/* Heading */}
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-6 text-center drop-shadow-lg">
         Select Your Assistant Image
       </h1>
 
-      <div className="w-[95%] md:w-[70%] lg:w-[60%] flex flex-wrap justify-center items-start gap-4 md:gap-6 px-2 md:px-6">
+      {/* Images Grid */}
+      <div className="w-full max-w-6xl grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         
         {/* Predefined Images */}
         {predefinedImages.map((img, idx) => (
@@ -55,7 +56,7 @@ function Customize() {
         {/* Upload Box */}
         <div
           onClick={handleUploadClick}
-          className={`cursor-pointer w-[140px] md:w-[160px] h-[200px] md:h-[220px] flex flex-col items-center justify-center 
+          className={`cursor-pointer w-full aspect-[3/4] flex flex-col items-center justify-center 
             bg-gradient-to-b from-blue-900 to-blue-950 border border-blue-500 rounded-2xl 
             shadow-lg shadow-blue-500/40 hover:scale-105 hover:shadow-blue-400/70 
             transition-transform duration-300 overflow-hidden
@@ -69,8 +70,10 @@ function Customize() {
             />
           ) : (
             <>
-              <FaFileUpload className="text-white w-[30px] h-[30px] md:w-[35px] md:h-[35px]" />
-              <span className="text-xs md:text-sm text-white mt-2">Upload Image</span>
+              <FaFileUpload className="text-white w-8 h-8 sm:w-10 sm:h-10" />
+              <span className="text-xs sm:text-sm md:text-base text-white mt-2">
+                Upload Image
+              </span>
             </>
           )}
         </div>
@@ -88,8 +91,8 @@ function Customize() {
       <button
         disabled={!selectImage}
         onClick={() => navigate("/customize2")}
-        className={`min-w-[160px] md:min-w-[180px] h-12 md:h-[60px] rounded-full 
-          text-white font-semibold text-sm md:text-lg shadow-lg mt-6 
+        className={`min-w-[160px] sm:min-w-[180px] md:min-w-[200px] h-12 sm:h-14 md:h-16 rounded-full 
+          text-white font-semibold text-sm sm:text-base md:text-lg shadow-lg mt-10 
           transition-all duration-300 ease-in-out
           ${selectImage 
             ? "bg-gradient-to-r from-cyan-700 to-blue-900 shadow-blue-500/40 hover:scale-105 hover:shadow-cyan-400/70 cursor-pointer" 
