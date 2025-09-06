@@ -6,33 +6,44 @@ import axios from "axios";
 
 function SignIn() {
   const navigate = useNavigate();
-  const { serverUrl } = useContext(UserDataContext);
+  const { serverUrl, setUserData } = useContext(UserDataContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading,setLoading] =useState(false)
+  const [loading, setLoading] = useState(false);
 
-const handleSignin = async (e) => {
-  e.preventDefault();
-  setError("");
-  setLoading(true);
+  const handleSignin = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
-  try {
-    const result = await axios.post(
-      `${serverUrl}/api/auth/signin`,
-      { email, password },
-      { withCredentials: true }
-    );
-    console.log(result.data);
-    setLoading(false);
-    navigate("/");
-  } catch (err) {
-    console.error("Signin error:", err.response?.data || err.message);
-    setLoading(false);
-    setError(err.response?.data?.message || "Signin failed");
-  }
-};
+    try {
+      const result = await axios.post(
+        `${serverUrl}/api/auth/signin`,
+        { email, password },
+        { withCredentials: true }
+      );
+
+      console.log("Signin response:", result.data);
+
+      // ✅ Save user in context
+      setUserData(result.data);
+
+      setLoading(false);
+
+      // ✅ Redirect logic
+      if (!result.data.assistantName || !result.data.assistantImage) {
+        navigate("/customize");
+      } else {
+        navigate("/");
+      }
+    } catch (err) {
+      console.error("Signin error:", err.response?.data || err.message);
+      setLoading(false);
+      setError(err.response?.data?.message || "Signin failed");
+    }
+  };
 
   return (
     <div
@@ -75,14 +86,14 @@ const handleSignin = async (e) => {
         <button
           type="submit"
           className="w-full md:w-auto min-w-[150px] h-12 md:h-14 bg-white rounded-full text-black font-bold text-sm md:text-lg mt-4"
-         disabled={loading}
+          disabled={loading}
         >
-          {loading?"loading":"SignIn"}
+          {loading ? "Loading..." : "Sign In"}
         </button>
 
         <p
           className="text-white text-sm md:text-base cursor-pointer mt-3 text-center"
-          onClick={() => navigate("/signup")} 
+          onClick={() => navigate("/signup")}
         >
           Don’t have an account?{" "}
           <span className="text-blue-400">Sign Up</span>

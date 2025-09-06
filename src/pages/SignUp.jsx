@@ -1,38 +1,49 @@
-import React, {useContext, useState}from "react";
+import React, { useContext, useState } from "react";
 import bgImage from "../assets/authBg.png";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { UserDataContext } from "../context/UserContext";
-import axios from "axios"
+import axios from "axios";
+
 function SignUp() {
-   const [showPassword, setShowPassword] = useState(false);
-   const navigate=useNavigate()
-    const{serverUrl}=useContext(UserDataContext)
-     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");  
-   const [password, setPassword] = useState("");
-   const [error,setError]=useState("")
-   const [loading,setLoading]=useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const { serverUrl, setUserData } = useContext(UserDataContext);
 
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");  
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-   const handleSignup=async(e)=>{
-    e.preventDefault()
-    setError("")
-    setLoading(true)
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
     try {
-      const result= await axios.post(`${serverUrl}/api/auth/signup`,
-        {name,email,password},{withCredentials:true}
-      )
-      console.log(result.data)
-      setLoading(false)
-      navigate("/customize")
-    } catch (error) {
-      console.log(error)
-      setLoading(false)
-      setError(error.response.data.message)
-    }
+      const result = await axios.post(
+        `${serverUrl}/api/auth/signup`,
+        { name, email, password },
+        { withCredentials: true }
+      );
 
-   }
+      console.log("Signup response:", result.data);
+
+      // ✅ Save user data in context
+      setUserData(result.data);
+
+      setLoading(false);
+
+      // ✅ Directly go to customize page
+      navigate("/customize");
+    } catch (error) {
+      console.error("Signup error:", error);
+      setLoading(false);
+      setError(error.response?.data?.message || "Signup failed");
+    }
+  };
+
   return (
     <div
       className="w-full min-h-screen bg-cover flex justify-center items-center px-4 py-8 md:py-0"
@@ -53,14 +64,18 @@ function SignUp() {
           type="text"
           placeholder="Enter Your Name"
           className="w-full h-12 md:h-14 outline-none border-2 border-white bg-transparent text-white placeholder-gray-300 px-4 md:px-6 rounded-full text-sm md:text-lg"
-          required onChange={(e)=>setName(e.target.value)} value={name}
+          required
+          onChange={(e) => setName(e.target.value)}
+          value={name}
         />
 
         <input
           type="email"
           placeholder="Enter Your Email"
           className="w-full h-12 md:h-14 outline-none border-2 border-white bg-transparent text-white placeholder-gray-300 px-4 md:px-6 rounded-full text-sm md:text-lg"
-         required onChange={(e)=>setEmail(e.target.value)} value={email}
+          required
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
         />
 
         <div className="relative w-full h-12 md:h-14">
@@ -68,9 +83,9 @@ function SignUp() {
             type={showPassword ? "text" : "password"}
             placeholder="Password"
             className="w-full h-full outline-none border-2 border-white bg-transparent text-white placeholder-gray-300 px-4 md:px-6 rounded-full text-sm md:text-lg"
-             required
-             onChange={(e) => setPassword(e.target.value)}
-             value={password}
+            required
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
           {!showPassword ? (
             <IoIosEye
@@ -84,19 +99,23 @@ function SignUp() {
             />
           )}
         </div>
-           {error.length>0 && <p className="text-red-500 text-[17px]">
-            *{error}
-            </p>}
+
+        {error.length > 0 && (
+          <p className="text-red-500 text-[17px]">* {error}</p>
+        )}
+
         <button
           type="submit"
           className="w-full md:w-auto min-w-[150px] h-12 md:h-14 bg-white rounded-full text-black font-bold text-sm md:text-lg mt-4"
           disabled={loading}
         >
-          {loading?"loading":"Signup"}
+          {loading ? "Loading..." : "Signup"}
         </button>
 
-        <p className="text-white text-sm md:text-base cursor-pointer mt-3 text-center"
-           onClick={()=>navigate("/signin")}>
+        <p
+          className="text-white text-sm md:text-base cursor-pointer mt-3 text-center"
+          onClick={() => navigate("/signin")}
+        >
           Already have an account?{" "}
           <span className="text-blue-400">Sign In</span>
         </p>
