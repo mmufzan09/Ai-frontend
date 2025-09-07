@@ -11,7 +11,7 @@ function Customize2() {
 
  const serverUrl =
   import.meta.env.VITE_SERVER_URL ||
-  "https://echomind-backend.vercel.app";
+  "https://ai-backend-production-cf44.up.railway.app";
 
   const handleUpdateAssistant = async () => {
     try {
