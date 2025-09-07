@@ -1,10 +1,12 @@
 import React, { useState, useContext } from "react";
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import bgImage from "../assets/authBg.png";
 import { useNavigate } from "react-router-dom";
 import { UserDataContext } from "../context/UserContext";
 import axios from "axios";
 
 function SignIn() {
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { serverUrl, setUserData } = useContext(UserDataContext);
 
@@ -70,17 +72,30 @@ function SignIn() {
           value={email}
         />
 
-        <input
-          type="password"
-          placeholder="Enter Password"
-          className="w-full h-12 md:h-14 outline-none border-2 border-white bg-transparent text-white placeholder-gray-300 px-4 md:px-6 rounded-full text-sm md:text-lg"
-          required
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
+       <div className="relative w-full h-12 md:h-14">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            className="w-full h-full outline-none border-2 border-white bg-transparent text-white placeholder-gray-300 px-4 md:px-6 rounded-full text-sm md:text-lg"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+          />
+          {!showPassword ? (
+            <IoIosEye
+              className="absolute top-1/2 -translate-y-1/2 right-4 md:right-6 cursor-pointer w-5 h-5 md:w-6 md:h-6 text-white"
+              onClick={() => setShowPassword(true)}
+            />
+          ) : (
+            <IoIosEyeOff
+              className="absolute top-1/2 -translate-y-1/2 right-4 md:right-6 cursor-pointer w-5 h-5 md:w-6 md:h-6 text-white"
+              onClick={() => setShowPassword(false)}
+            />
+          )}
+        </div>
 
         {error.length > 0 && (
-          <p className="text-red-500 text-sm">* {error}</p>
+          <p className="text-red-500 text-[17px]">* {error}</p>
         )}
 
         <button

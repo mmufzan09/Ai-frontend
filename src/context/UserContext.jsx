@@ -4,7 +4,7 @@ import axios from "axios";
 export const UserDataContext = createContext();
 
 function UserContext({ children }) {
-  const serverUrl = "https://ai-backend-production-cf44.up.railway.app";
+  const serverUrl = "https://echomind-backend.vercel.app";
 
   // ✅ ek hi axios instance
   const api = axios.create({
