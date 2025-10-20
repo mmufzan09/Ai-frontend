@@ -18,7 +18,7 @@ function HomePage() {
   const voicesRef = useRef([]);
   const recognitionRef = useRef(null);
   const navigate = useNavigate();
- const serverUrl = "https://echomind-backend.vercel.app/";
+ const serverUrl = "https://echomind-backend.vercel.app";
 
   
 
